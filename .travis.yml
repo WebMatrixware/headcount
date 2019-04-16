@@ -1,0 +1,7 @@
+language: nodejs
+
+services:
+  - docker
+
+script:
+  - npm test
