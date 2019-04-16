@@ -1,7 +1,6 @@
-language: nodejs
-
 services:
   - docker
 
 script:
-  - npm test
+  - docker-compose build
+  - docker-compose run
