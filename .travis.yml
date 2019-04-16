@@ -1,6 +1,12 @@
-services:
-  - docker
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.0
 
-script:
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+  - docker-compose --version
+
   - docker-compose build
-  - docker-compose run
+  - docker-compose start
+
+  - docker ps
