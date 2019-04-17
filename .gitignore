@@ -1,3 +1,5 @@
 app/.env
+app/coverage/**
+app/logs/**
 
 prepros-6.config
