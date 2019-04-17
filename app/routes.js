@@ -1,5 +1,7 @@
 'use strict';
 
+const Handlers = require('./handlers.js');
+
 module.exports = {
   register: async (server, options) => {
     server.route([{
@@ -11,6 +13,14 @@ module.exports = {
           redirectToSlash: true,
           index: true,
         }
+      }
+    }, {
+      method: 'GET',
+      path: '/users',
+      handler: Handlers.getUsers,
+      options: {
+        description: 'Return optionally limited list of users with statuses',
+        tags: ['users']
       }
     }]);
   },
