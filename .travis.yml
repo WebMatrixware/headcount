@@ -1,12 +1,8 @@
-env:
-  DOCKER_COMPOSE_VERSION: 1.8.0
+language: node_js
 
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
-  - docker-compose --version
+node_js:
+  - "node"
 
-  - docker-compose build
-  - docker-compose start
-
-  - docker ps
+script:
+  - cd app
+  - npm test
