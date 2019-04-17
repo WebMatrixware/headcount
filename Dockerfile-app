@@ -1,6 +1,6 @@
 FROM node:11
 
-EXPOSE 80
+EXPOSE 8585
 
 RUN mkdir -p /opt/headcount
 COPY ./ /opt/headcount

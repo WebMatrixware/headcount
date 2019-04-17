@@ -5,6 +5,6 @@ services:
     image: blanning/headcount:v0.1.0
     container_name: headcount-v0.1.0
     ports:
-      - "32710:80"
+      - "32710:8585"
     stdin_open: true
     tty: true
