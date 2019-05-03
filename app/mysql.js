@@ -1,23 +1,26 @@
-SELECT users.UserDN AS `DN`
-	, dn.Description AS `Name`
-	, chmtypes.Description AS `State`
-    , IF(callhandlingmodes.CallHandlingNote IS NULL, '', callhandlingmodes.CallHandlingNote) AS `Note`
-    , cfconditiontypes.Description AS `CF`
+'use strict';
+
+exports.getUsers = `
+SELECT users.UserDN AS \`DN\`
+  , dn.Description AS \`Name\`
+  , chmtypes.Description AS \`State\`
+    , IF(callhandlingmodes.CallHandlingNote IS NULL, '', callhandlingmodes.CallHandlingNote) AS \`Note\`
+    , cfconditiontypes.Description AS \`CF\`
     , CASE
-		WHEN callhandlingmodes.CFConditionID = '1' THEN callhandlingmodes.CFAlways
+    WHEN callhandlingmodes.CFConditionID = '1' THEN callhandlingmodes.CFAlways
         WHEN callhandlingmodes.CFConditionID = '2' THEN CONCAT(callhandlingmodes.CFNoAnswer, ' / ', callhandlingmodes.CFBusy)
         WHEN callhandlingmodes.CFConditionID = '3' THEN ''
- 	END AS 'Destination'
-    , IF(callhandlingmodes.CFConditionID = '2', callhandlingmodes.CFNARings, '') AS `Rings`
-    , DATE_FORMAT(callhandlingmodes.LastUpdateUTCTime, '%a, %b %d %Y @ %r') AS `Updated`
-	FROM users
+    END AS 'Destination'
+    , IF(callhandlingmodes.CFConditionID = '2', callhandlingmodes.CFNARings, '') AS \`Rings\`
+    , DATE_FORMAT(callhandlingmodes.LastUpdateUTCTime, '%a, %b %d %Y @ %r') AS \`Updated\`
+  FROM users
     LEFT JOIN dn ON (users.UserDN = dn.DN)
     LEFT JOIN chmtypes ON (users.CurrentCHMTypeID = chmtypes.CHMTypeID)
     LEFT JOIN callhandlingmodes ON (users.UserDN = callhandlingmodes.UserDN AND users.CurrentCHMTypeID = callhandlingmodes.CHMTypeID)
     LEFT JOIN cfconditiontypes ON (callhandlingmodes.CFConditionID = cfconditiontypes.CFConditionID)
     WHERE dn.DNTypeID = '1'
-		AND users.UserDN IN ('6101'
-							, '6102'
+    AND users.UserDN IN ('6101'
+                            , '6102'
                             , '6104'
                             , '6106'
                             , '6108'
@@ -40,3 +43,4 @@ SELECT users.UserDN AS `DN`
                             , '6153'
                             , '6155')
     ORDER BY users.UserDN
+`;
